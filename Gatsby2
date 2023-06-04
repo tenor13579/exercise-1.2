@@ -1,0 +1,92 @@
+<?php
+function numberToEnglish($num) {
+  $ones = array(
+    0 => "zero", 
+    1 => "one", 
+    2 => "two", 
+    3 => "three", 
+    4 => "four", 
+    5 => "five", 
+    6 => "six", 
+    7 => "seven", 
+    8 => "eight", 
+    9 => "nine", 
+    10 => "ten", 
+    11 => "eleven", 
+    12 => "twelve", 
+    13 => "thirteen", 
+    14 => "fourteen", 
+    15 => "fifteen", 
+    16 => "sixteen", 
+    17 => "seventeen", 
+    18 => "eighteen", 
+    19 => "nineteen"
+  );
+
+  $tens = array(
+    2 => "twenty", 
+    3 => "thirty", 
+    4 => "forty", 
+    5 => "fifty", 
+    6 => "sixty", 
+    7 => "seventy", 
+    8 => "eighty", 
+    9 => "ninety"
+  );
+  
+  // проверка на пустое или не число элемент входного параметра
+  if (!$num || !is_numeric($num)) {
+    return false;
+  }
+
+  // числа от 0 до 19
+  if ($num >= 0 && $num < 20) {
+    return $ones[$num];
+  }
+  
+  // числа от 20 до 99
+  if ($num >= 20 && $num < 100) {
+    $ten = floor($num/10);
+    $one = $num % 10;
+    if ($one > 0) {
+      return $tens[$ten] . " " . $ones[$one];
+    } else {
+      return $tens[$ten];
+    }
+  }
+  
+  // числа от 100 до 999
+  if ($num >= 100 && $num < 1000) {
+    $hundred = floor($num/100);
+    $rest = $num % 100;
+    if ($rest > 0) {
+      return $ones[$hundred] . " hundred " . numberToEnglish($rest);
+    } else {
+      return $ones[$hundred] . " hundred";
+    }
+  }
+  
+  // числа от 1000 до 999999
+  if ($num >= 1000 && $num < 1000000) {
+    $thousand = floor($num/1000);
+    $rest = $num % 1000;
+    if ($rest > 0) {
+      return numberToEnglish($thousand) . " thousand " . numberToEnglish($rest);
+    } else {
+      return numberToEnglish($thousand) . " thousand";
+    }
+  }
+  
+  // числа от 1000000 и выше
+  if ($num >= 1000000) {
+    $million = floor($num/1000000);
+    $rest = $num % 1000000;
+    if ($rest > 0) {
+      return numberToEnglish($million) . " million " . numberToEnglish($rest);
+    } else {
+      return numberToEnglish($million) . " million";
+    }
+  }
+
+}
+?>
